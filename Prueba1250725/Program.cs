@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Prueba1250725.Models;
 
@@ -9,7 +10,14 @@ builder.Services.AddDbContext<Prueba250725Context>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Conn"));
 });
-
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie((o) =>
+{
+    o.LoginPath = new PathString("/Users/login");
+    o.AccessDeniedPath = new PathString("/Users/login");
+    o.ExpireTimeSpan = TimeSpan.FromHours(8);
+    o.SlidingExpiration = true;
+    o.Cookie.HttpOnly = true;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
