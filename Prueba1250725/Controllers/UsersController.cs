@@ -15,6 +15,7 @@ using Prueba1250725.Models;
 
 namespace Prueba1250725.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly Prueba250725Context _context;
