@@ -62,6 +62,7 @@ namespace Prueba1250725.Controllers
         {
             if (ModelState.IsValid)
             {
+                user.Password = CalcularHashMD5(user.Password);
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
