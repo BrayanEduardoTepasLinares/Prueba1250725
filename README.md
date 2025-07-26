@@ -17,27 +17,9 @@ Este proyecto es un sistema de gestión de usuarios con roles desarrollado en C#
 
 ## Configuración de la Base de Datos
 
-1. Ejecutar el siguiente script SQL para crear la base de datos:
+1. La base de datos ahora está en línea. No es necesario crearla manualmente, solo asegúrate de tener acceso a la conexión remota proporcionada.
 
-```sql
-CREATE DATABASE Prueba250725;
-
-USE Prueba250725;
-
-CREATE TABLE roles(
-    id INT PRIMARY KEY IDENTITY(1,1),
-    name VARCHAR(50) NOT NULL UNIQUE
-);
-
-CREATE TABLE users(
-    id INT PRIMARY KEY IDENTITY(1,1),
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(150) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    role_id INT NOT NULL,
-    FOREIGN KEY (role_id) REFERENCES roles(id)
-);
-```
+Si necesitas los scripts de creación, solicítalos al administrador.
 
 ## Configuración del Proyecto
 
@@ -105,3 +87,6 @@ builder.Services.AddDbContext<Context>(options =>
 
 - Contraseñas encriptadas
 - Autenticación de usuarios
+
+# Autor
+* Brayan Eduardo Tepas Linares
