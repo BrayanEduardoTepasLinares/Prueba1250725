@@ -10,7 +10,7 @@ using Prueba1250725.Models;
 
 namespace Prueba1250725.Controllers
 {
-    [Authorize]
+    [Authorize (Roles = "admin")]
     public class RolesController : Controller
     {
         private readonly Prueba250725Context _context;

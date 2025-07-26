@@ -51,7 +51,8 @@ namespace Prueba1250725.Controllers
         {
             usuario.Password = CalcularHashMD5(usuario.Password);
             var usuarioAuth = await _context.
-                Users.
+                Users
+                .Include(u => u.Role).
                 FirstOrDefaultAsync(s => s.Email == usuario.Email && s.Password == usuario.Password);
 
             if (usuarioAuth != null && usuarioAuth.Id > 0 && usuarioAuth.Email == usuario.Email)
@@ -59,7 +60,8 @@ namespace Prueba1250725.Controllers
                 var claims = new[] {
             new Claim(ClaimTypes.Name, usuarioAuth.Email),
             new Claim("Id", usuarioAuth.Id.ToString()),
-            new Claim("Name", usuarioAuth.Name)
+            new Claim("Name", usuarioAuth.Name),
+            new Claim(ClaimTypes.Role, usuarioAuth.Role.Name)
         };
 
                 var identidad = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
