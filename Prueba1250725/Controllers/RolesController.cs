@@ -61,9 +61,18 @@ namespace Prueba1250725.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(role);
+                bool nombre = await _context.Roles.AnyAsync(u => u.Name == role.Name);
+
+                if (nombre)
+                {
+                    ModelState.AddModelError("Name", "El nombre ya está registrado.");
+                }
+                else
+                {
+                    _context.Add(role);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+                }
             }
             return View(role);
         }

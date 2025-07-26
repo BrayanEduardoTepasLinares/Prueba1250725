@@ -109,10 +109,19 @@ namespace Prueba1250725.Controllers
         {
             if (ModelState.IsValid)
             {
-                user.Password = CalcularHashMD5(user.Password);
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                bool correoDuplicado = await _context.Users.AnyAsync(u => u.Email == user.Email);
+
+                if (correoDuplicado)
+                {
+                    ModelState.AddModelError("Email", "El correo electrónico ya está registrado.");
+                }
+                else
+                {
+                    user.Password = CalcularHashMD5(user.Password);
+                    _context.Add(user);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
             ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name", user.RoleId);
             return View(user);
